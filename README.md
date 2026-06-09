@@ -1,93 +1,252 @@
-# Economic Intelligence Platform
+# Economic Intelligence Platform (EIP)
 
+## Overview
 
+Economic Intelligence Platform (EIP) is an AI-powered system that collects daily economic and financial news, analyzes its impact on markets, and transforms it into actionable insights. The platform helps students, researchers, and investors understand economic trends, monitor market sentiment, and make informed decisions through automated analysis and intelligent reporting.
 
-## Getting started
+---
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Problem Statement
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Economic and financial information is scattered across multiple sources such as news websites, government reports, and market platforms. Users spend considerable time gathering and interpreting this information before understanding its impact on the economy and financial markets.
 
-## Add your files
+The Economic Intelligence Platform addresses this challenge by providing a centralized solution that automatically processes economic news and converts it into meaningful insights.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+---
 
-```
-cd existing_repo
-git remote add origin https://code.swecha.org/abhinav07/economic-intelligence-platform.git
-git branch -M main
-git push -uf origin main
-```
+## Objectives
 
-## Integrate with your tools
+* Collect economic and financial news from multiple sources.
+* Categorize news into relevant economic sectors.
+* Analyze sentiment and market impact.
+* Calculate an Economic Health Score.
+* Predict potential market trends.
+* Generate automated research reports.
+* Provide an AI-powered conversational assistant.
+* Deliver insights through an interactive dashboard.
 
-- [ ] [Set up project integrations](https://code.swecha.org/abhinav07/economic-intelligence-platform/-/settings/integrations)
+---
 
-## Collaborate with your team
+## Key Features
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### News Collection
 
-## Test and Deploy
+* Fetch economic and financial news from multiple APIs.
+* Store and manage news data efficiently.
 
-Use the built-in continuous integration in GitLab.
+### News Categorization
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+Classify news into:
 
-***
+* Inflation
+* GDP
+* Employment
+* Banking
+* Monetary Policy
+* Commodities
+* Forex
+* International Markets
+* Geopolitical Events
 
-# Editing this README
+### Sentiment Analysis
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Analyze news sentiment as:
 
-## Suggestions for a good README
+* Positive
+* Negative
+* Neutral
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+### Event Detection
 
-## Name
-Choose a self-explaining name for your project.
+Identify major economic events such as:
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+* Interest Rate Changes
+* Inflation Reports
+* GDP Releases
+* Central Bank Announcements
+* Commodity Price Shocks
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### Impact Analysis
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Determine:
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+* Affected sectors
+* Expected market reaction
+* Economic consequences
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### Economic Health Score
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Generate a custom score that reflects the overall condition of the economy using:
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+* Inflation Data
+* GDP Growth
+* Employment Data
+* Interest Rates
+* Market Performance
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### Market Prediction Engine
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Predict:
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+* Market Direction
+* Sector Strength
+* Risk Levels
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+### Research Report Generation
 
-## License
-For open source projects, say how it is licensed.
+Automatically generate:
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+* Daily Reports
+* Weekly Reports
+* Monthly Summaries
+
+### AI-Powered Chatbot
+
+Allow users to ask questions such as:
+
+* Why did the market fall today?
+* What are the latest inflation updates?
+* Summarize today's economic news.
+* What happened after the previous interest rate cut?
+
+### Interactive Dashboard
+
+Display:
+
+* News Feed
+* Market Sentiment
+* Economic Health Score
+* Sector Analysis
+* Predictions
+* Reports
+
+---
+
+## System Architecture
+
+Data Sources
+
+↓
+
+Data Collection Layer
+
+↓
+
+Data Processing Layer
+
+↓
+
+AI Intelligence Layer
+
+↓
+
+Knowledge Base
+
+↓
+
+Application Layer
+
+↓
+
+Dashboard & AI Assistant
+
+---
+
+## Technology Stack
+
+### Frontend
+
+* Streamlit
+
+### Backend
+
+* FastAPI
+
+### Database
+
+* PostgreSQL
+
+### Vector Database
+
+* ChromaDB
+
+### Artificial Intelligence
+
+* FinBERT
+* Sentence Transformers
+* OpenAI/Gemini Models
+
+### Frameworks
+
+* LangChain
+
+### Data Processing
+
+* Pandas
+* NumPy
+
+### Visualization
+
+* Plotly
+* Matplotlib
+
+### Deployment
+
+* Docker
+* AWS / Render / Railway
+
+---
+
+## Project Workflow
+
+1. Collect economic and financial news.
+2. Process and clean the data.
+3. Categorize articles into economic sectors.
+4. Perform sentiment analysis.
+5. Detect important economic events.
+6. Estimate market impact.
+7. Calculate Economic Health Score.
+8. Generate market predictions.
+9. Store knowledge in vector database.
+10. Answer user queries using RAG.
+11. Display insights through the dashboard.
+12. Generate automated reports.
+
+---
+
+## Expected Outcomes
+
+* Centralized economic intelligence platform.
+* Faster access to market insights.
+* Improved understanding of economic trends.
+* Automated report generation.
+* AI-powered economic research assistant.
+* Enhanced decision-making support for users.
+
+---
+
+## Future Enhancements
+
+* Real-time market monitoring.
+* Portfolio recommendation system.
+* Global market expansion.
+* Personalized alerts and notifications.
+* Advanced forecasting models.
+* Mobile application support.
+
+---
+
+## Success Metrics
+
+* High news classification accuracy.
+* Accurate sentiment analysis.
+* Fast chatbot response times.
+* Reliable report generation.
+* Real-time dashboard updates.
+* Positive user engagement.
+
+---
+
+## Conclusion
+
+The Economic Intelligence Platform combines Artificial Intelligence, Natural Language Processing, Financial Analytics, and Retrieval-Augmented Generation (RAG) to transform daily economic news into meaningful market intelligence. The platform aims to simplify economic analysis, improve accessibility to financial information, and provide users with actionable insights through a modern AI-driven ecosystem.
