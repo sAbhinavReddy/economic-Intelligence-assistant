@@ -1,127 +1,237 @@
-# Economic Intelligence Platform — Proof of Concept
-**Economic Intelligence Platform**
-Version 0.1 · June 2026
+# Economic Intelligence Platform (EIP) — Proof of Concept
+
+Version 1.0 · June 2026
 
 ---
 
-## Purpose
+# Purpose
 
-This document describes what the EchnoMind POC must prove, why it exists, and how we will know it has succeeded.
+This document defines the Proof of Concept (POC) for the Economic Intelligence Platform (EIP).
 
-A POC is not a product. It is a controlled experiment to answer a single question before committing to full development:
+The purpose of this POC is to validate whether an AI-powered system can collect economic and financial news, identify important economic events, analyze their causes, evaluate their impact, and present meaningful insights through a simple and interactive dashboard.
 
-> *Can we collect financial news, run AI analysis on it, store it intelligently, and let a user get meaningful answers from it — all working together as one system?*
+A POC is not a complete product. It is an experimental implementation used to verify technical feasibility before investing in full-scale development.
 
----
+The primary question this POC aims to answer is:
 
-## Problem We Are Solving
-
-Financial news is overwhelming. Every day, hundreds of articles cover RBI decisions, market movements, sector performance, and economic indicators. Most people — investors, analysts, students, professionals — do not have the time to read and make sense of all of it.
-
-EchnoMind proposes to do that reading and thinking automatically, then surface just what matters: a health score, a sentiment summary, sector signals, and answers to direct questions.
-
-The POC validates whether that pipeline is technically feasible with available tools and free-tier APIs.
+> Can we automatically collect economic news, detect important events, explain why they happened, analyze their impact, and present actionable insights through a unified platform?
 
 ---
 
-## What the POC Will Demonstrate
+# Problem Statement
 
-By the end of the POC, the following should work together as a single, manually triggered run:
+Economic and financial information is spread across numerous news websites, government publications, and financial portals. Users often spend significant time reading articles to understand:
 
-**1. News is fetched automatically**
-The system pulls the latest Indian financial news from at least two sources and stores the raw articles locally.
+* What happened?
+* Why did it happen?
+* Which sectors are affected?
+* What might happen next?
 
-**2. AI assigns a sentiment to each article**
-Each article is labelled Positive, Negative, or Neutral by a financial-domain AI model (FinBERT), with a confidence score. The affected market sector is also identified.
+For students, researchers, and investors, analyzing large volumes of news manually is inefficient and time-consuming.
 
-**3. Articles are stored in a searchable knowledge base**
-Processed articles are embedded and stored in a vector database so they can be retrieved by meaning, not just keywords.
-
-**4. A chatbot answers questions using today's news**
-A user can type a plain-English question. The system finds the most relevant articles and uses an LLM to generate a grounded, cited answer.
-
-**5. A dashboard makes it all visible**
-A single screen shows the Economic Health Score, market sentiment, sector signals, top stories, and the chatbot — all from the same day's data.
+The Economic Intelligence Platform addresses this challenge by automatically transforming raw economic news into structured intelligence and easy-to-understand insights.
 
 ---
 
-## What the POC Will NOT Do
+# Objectives
 
-To keep the scope achievable, the following are explicitly excluded:
+The POC aims to demonstrate the following capabilities:
 
-- No user accounts, login, or authentication
-- No automated or scheduled pipeline (runs are triggered manually)
-- No full article text — free APIs return headlines and descriptions only
-- No persistent chat history — each question is independent
-- No production-grade infrastructure — everything runs locally
-- No email reports or notifications
-- No paid data sources
-
-These are not oversights. They are deliberate trade-offs to reach a working end-to-end prototype as fast as possible.
+* Collect economic and financial news from trusted sources.
+* Detect significant economic events.
+* Analyze the causes behind economic developments.
+* Evaluate potential impacts on sectors and industries.
+* Generate future outlook summaries.
+* Present information through an interactive dashboard.
+* Provide concise and understandable economic insights.
 
 ---
 
-## Inputs and Outputs
+# What the POC Will Demonstrate
 
-| Input | Output |
-|---|---|
-| Financial news headlines (NewsAPI, RSS) | Sentiment-labelled, categorised articles |
-| Live market prices (yfinance) | Economic Health Score |
-| User's plain-English question | Grounded AI answer with source citations |
-| All of the above combined | A readable dashboard |
+## 1. News Collection
 
----
+The system fetches economic and financial news from multiple news sources and stores the collected articles for processing.
 
-## How We Know the POC Has Succeeded
+### Expected Outcome
 
-The POC is complete when all seven conditions below are met:
-
-| # | Condition | Acceptable Result |
-|---|---|---|
-| 1 | News fetched | At least 30 articles per run, no errors |
-| 2 | Sentiment accuracy | 80%+ correct on 20 manually reviewed articles |
-| 3 | Categorisation | 90%+ of articles receive a correct category |
-| 4 | Knowledge base query | 5 test queries return relevant articles |
-| 5 | Chatbot answers | All 5 test questions answered with correct, cited responses |
-| 6 | Health Score | Score matches general market mood on 3 separate test days |
-| 7 | Dashboard usability | One non-technical person navigates it without guidance |
+* Latest news articles are collected successfully.
+* News data is stored in a structured format.
 
 ---
 
-## Timeline
+## 2. Event Detection
 
-| Week | Focus |
-|---|---|
-| Week 1 | News ingestion + FinBERT sentiment working |
-| Week 2 | Vector store + chatbot working end to end |
-| Week 3 | Dashboard assembled, success criteria tested |
+The system identifies significant economic events from collected news.
 
-Total: 3 weeks, 1–2 developers.
+Examples include:
 
----
+* Interest Rate Changes
+* Inflation Reports
+* GDP Releases
+* Banking Announcements
+* Commodity Price Changes
+* Forex Movements
+* Geopolitical Events
 
-## Risks
+### Expected Outcome
 
-| Risk | Likelihood | Mitigation |
-|---|---|---|
-| NewsAPI free tier too limited | Medium | Use RSS feeds as backup sources |
-| FinBERT too slow on CPU | Low | Process in batches; limit to 50 articles per run |
-| LLM rate limits (Groq/Gemini) | Medium | Cache answers; limit to 10 chatbot queries per session |
-| Low sentiment accuracy on Indian finance news | Medium | Manual review early; adjust confidence threshold |
+* Major events are automatically identified and categorized.
 
 ---
 
-## What Comes Next
+## 3. Cause Analysis
 
-If the POC succeeds, phase two will focus on:
+The system analyzes news content to determine the factors contributing to an event.
 
-- Replacing keyword categorisation with a trained classifier
-- Enriching the Health Score with RBI, CPI, and GDP data
-- Automating the pipeline to run daily at 7 AM IST
-- Moving to a hosted vector database
-- Building proper authentication and a production UI
+### Example
+
+Event:
+
+RBI Increases Repo Rate
+
+Possible Causes:
+
+* Rising Inflation
+* Currency Pressure
+* Increasing Consumer Prices
+
+### Expected Outcome
+
+* Each event includes an AI-generated explanation of its causes.
 
 ---
 
-*This document is a validation brief, not a technical specification.*
-*For the technical breakdown, see SPEC-KIT.md.*
+## 4. Impact Analysis
+
+The system evaluates how an event may affect industries, businesses, consumers, and the broader economy.
+
+### Example
+
+Affected Sectors:
+
+* Banking
+* Real Estate
+* Automobile
+
+### Expected Outcome
+
+* Sector-wise impact analysis is generated for detected events.
+
+---
+
+## 5. Future Outlook Generation
+
+The system generates a brief outlook describing possible future implications.
+
+### Example
+
+Future Outlook:
+
+* Borrowing costs may increase.
+* Consumer spending may slow.
+* Inflation could moderate over time.
+
+### Expected Outcome
+
+* A future outlook is generated for each major event.
+
+---
+
+## 6. Interactive Dashboard
+
+The platform displays processed information through a Streamlit dashboard.
+
+The dashboard presents:
+
+* Latest Economic Events
+* Event Categories
+* Cause Analysis
+* Impact Analysis
+* Future Outlook
+* Economic News Summaries
+
+### Expected Outcome
+
+Users can understand key economic developments without reading every article individually.
+
+---
+
+# Scope Limitations
+
+To keep the POC achievable within the project timeline, the following features are excluded:
+
+* User Authentication
+* User Profiles
+* Real-Time Streaming Data
+* Automated Scheduling
+* Paid Data Sources
+* Portfolio Management
+* Trading Features
+* Stock Price Prediction
+* Advanced Forecasting Models
+
+These features may be considered in future versions.
+
+---
+
+# Inputs and Outputs
+
+| Input                  | Output                    |
+| ---------------------- | ------------------------- |
+| Economic News Articles | Detected Economic Events  |
+| Financial News Data    | Cause Analysis            |
+| Event Information      | Impact Assessment         |
+| Historical Context     | Future Outlook            |
+| User Queries           | AI-Generated Explanations |
+| Processed Data         | Interactive Dashboard     |
+
+---
+
+# Success Criteria
+
+The POC will be considered successful if the following conditions are met:
+
+| # | Condition               | Success Metric                                            |
+| - | ----------------------- | --------------------------------------------------------- |
+| 1 | News Collection         | At least 20 news articles collected successfully          |
+| 2 | Event Detection         | Major events correctly identified                         |
+| 3 | Cause Analysis          | Causes generated for detected events                      |
+| 4 | Impact Analysis         | Sector-wise impacts generated                             |
+| 5 | Future Outlook          | Outlook generated for major events                        |
+| 6 | Dashboard Functionality | Insights displayed correctly                              |
+| 7 | User Experience         | Users can understand events without reading full articles |
+
+---
+
+# Risks and Mitigation
+
+| Risk                        | Likelihood | Mitigation                     |
+| --------------------------- | ---------- | ------------------------------ |
+| Limited free news APIs      | Medium     | Use multiple free news sources |
+| Incomplete news data        | Medium     | Combine API and RSS feeds      |
+| AI response inconsistencies | Medium     | Use structured prompts         |
+| Large news volume           | Low        | Process top articles only      |
+
+---
+
+# Future Enhancements
+
+If the POC succeeds, future versions may include:
+
+* Historical Event Comparison
+* Real-Time Monitoring
+* Personalized Alerts
+* Advanced Event Classification
+* AI Economic Assistant
+* Multi-Country Economic Analysis
+* Automated Daily Reports
+* Mobile Application Support
+
+---
+
+# Conclusion
+
+The Economic Intelligence Platform (EIP) aims to transform economic and financial news into actionable intelligence. By combining news collection, event detection, cause analysis, impact assessment, and future outlook generation, the platform helps users understand economic developments quickly and effectively through an AI-powered dashboard.
+
+This Proof of Concept validates the feasibility of building an intelligent economic analysis platform capable of converting raw news into meaningful economic insights.
