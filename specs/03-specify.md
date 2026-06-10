@@ -4,13 +4,17 @@
 
 ### FR-1 Economic News Collection
 
-* Collect news from financial news sources.
+The system shall:
+
+* Collect news from economic and financial news sources.
 * Fetch articles periodically.
-* Store raw news articles.
+* Store raw news articles for processing.
+
+---
 
 ### FR-2 News Categorization
 
-Categories:
+The system shall classify news into categories including:
 
 * Inflation
 * GDP
@@ -22,77 +26,144 @@ Categories:
 * International Markets
 * Geopolitical Events
 
-### FR-3 Sentiment Analysis
+---
 
-* Positive
-* Negative
-* Neutral
+### FR-3 News Summarization
+
+The system shall generate concise summaries of collected news articles.
+
+Outputs:
+
+* Article Summary
+* Key Highlights
+
+---
 
 ### FR-4 Event Detection
 
-Detect:
+The system shall identify important economic events including:
 
-* RBI Meetings
+* RBI Announcements
 * Federal Reserve Announcements
 * Inflation Reports
 * GDP Releases
 * Interest Rate Changes
+* Banking Developments
+* Commodity Price Movements
 
-### FR-5 Impact Analysis
+Outputs:
 
-* Sector Influence
-* Market Impact
+* Event Type
+* Event Category
+
+---
+
+### FR-5 Cause Analysis
+
+The system shall determine the key factors contributing to detected economic events.
+
+Outputs:
+
+* Cause Explanation
+* Supporting Factors
+
+---
+
+### FR-6 Impact Analysis
+
+The system shall evaluate the potential impact of economic events on:
+
+* Industries
+* Businesses
+* Consumers
+* Financial Markets
+
+Outputs:
+
+* Impact Assessment
+* Affected Sectors
 * Economic Consequences
 
-### FR-6 Economic Health Score
+---
 
-Calculate score using:
+### FR-7 Future Outlook Generation
 
-* Inflation
-* GDP
-* Employment
-* Interest Rates
-* Market Performance
+The system shall generate AI-powered future outlooks based on detected events and their impact.
 
-### FR-7 Market Prediction Engine
+Outputs:
 
-Predict:
+* Short-Term Outlook
+* Economic Implications
+* Sector Outlook
 
-* Bullish
-* Bearish
-* Neutral
+---
 
 ### FR-8 Research Report Generation
 
-Generate:
+The system shall generate:
 
 * Daily Reports
 * Weekly Reports
-* Monthly Reports
+* Monthly Summaries
 
-### FR-9 RAG Chatbot
+Outputs:
 
-Answer:
+* Economic Insight Reports
+* Event Analysis Reports
+
+---
+
+### FR-9 AI Economic Assistant
+
+The assistant shall answer:
 
 * Economic Questions
-* Market Questions
-* Historical Queries
+* Financial Questions
+* Event-Related Questions
+* Historical Economic Queries
+
+Example Questions:
+
+* Why did inflation increase?
+* What are the effects of higher interest rates?
+* What happened in today's economy?
+
+---
 
 ### FR-10 Dashboard
 
-Display:
+The dashboard shall display:
 
-* News Feed
-* Sentiment
-* Economic Health Score
-* Sector Analysis
-* Predictions
-* Reports
+* Latest Economic News
+* Economic Events
+* Cause Analysis
+* Impact Analysis
+* Future Outlook
+* Research Reports
+
+---
 
 ## Non-Functional Requirements
 
-* High Performance
-* Scalability
-* Security
-* Reliability
-* Maintainability
+### Performance
+
+* Dashboard response time under 3 seconds.
+* Fast news processing and retrieval.
+
+### Scalability
+
+* Support increasing news volume and future expansion.
+
+### Security
+
+* Secure API key management.
+* Protected access to system resources.
+
+### Reliability
+
+* Stable and consistent operation.
+
+### Maintainability
+
+* Modular architecture.
+* Reusable and well-documented components.

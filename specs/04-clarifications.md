@@ -12,37 +12,77 @@
 * Europe
 * Asia-Pacific
 
+---
+
 ## Data Refresh Frequency
 
 ### News
 
 Every 1 Hour
 
-### Market Data
-
-Every 15 Minutes
-
 ### Economic Indicators
 
 Daily Updates
+
+### Event Analysis
+
+Generated whenever new articles are processed.
+
+---
 
 ## User Roles
 
 ### Student
 
-Read insights and reports.
+* Learn about economic events.
+* Read AI-generated summaries and explanations.
 
 ### Researcher
 
-Analyze historical trends.
+* Analyze economic developments.
+* Study event impacts and historical trends.
 
 ### Investor
 
-Track sentiment and predictions.
+* Monitor important economic events.
+* Understand sector-wise impacts.
+* Track economic developments and outlooks.
 
-## Prediction Approach
+---
 
-Hybrid:
+## Analysis Approach
 
-* Rule-Based Analysis
-* Machine Learning Models
+The platform uses a combination of:
+
+* News Collection
+* Natural Language Processing (NLP)
+* Event Detection
+* Cause Analysis
+* Impact Assessment
+* AI-Powered Insight Generation
+
+---
+
+## Supported Event Categories
+
+* Inflation
+* GDP
+* Employment
+* Banking
+* Monetary Policy
+* Commodities
+* Forex
+* International Markets
+* Geopolitical Events
+
+---
+
+## Expected Outputs
+
+For each detected event, the platform provides:
+
+* Event Summary
+* Cause Analysis
+* Impact Assessment
+* Affected Sectors
+* Future Outlook
