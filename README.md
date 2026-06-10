@@ -2,7 +2,7 @@
 
 ## Overview
 
-Economic Intelligence Platform (EIP) is an AI-powered system that collects daily economic and financial news, analyzes its impact on markets, and transforms it into actionable insights. The platform helps students, researchers, and investors understand economic trends, monitor market sentiment, and make informed decisions through automated analysis and intelligent reporting.
+Economic Intelligence Platform (EIP) is an AI-powered platform that collects and analyzes economic and financial news to identify important events, explain why they occurred, assess their impact on different sectors, and provide insights into possible future outcomes. The platform converts complex economic information into understandable intelligence through automated analysis and interactive dashboards.
 
 ---
 
@@ -16,14 +16,14 @@ The Economic Intelligence Platform addresses this challenge by providing a centr
 
 ## Objectives
 
-* Collect economic and financial news from multiple sources.
-* Categorize news into relevant economic sectors.
-* Analyze sentiment and market impact.
-* Calculate an Economic Health Score.
-* Predict potential market trends.
-* Generate automated research reports.
-* Provide an AI-powered conversational assistant.
-* Deliver insights through an interactive dashboard.
+* Collect economic and financial news from multiple trusted sources.
+* Detect significant economic events automatically.
+* Analyze the causes behind economic developments.
+* Evaluate sector-wise and economic impact.
+* Generate AI-powered summaries and insights.
+* Provide future outlooks based on economic reasoning.
+* Offer an interactive dashboard for monitoring economic trends.
+* Enable users to interact with an AI-powered economic assistant.
 
 ---
 
@@ -84,13 +84,29 @@ Generate a custom score that reflects the overall condition of the economy using
 * Interest Rates
 * Market Performance
 
-### Market Prediction Engine
+### Economic Event Analysis
 
-Predict:
+The platform identifies major economic events from daily news and classifies them into categories such as:
 
-* Market Direction
-* Sector Strength
-* Risk Levels
+* Inflation
+* GDP
+* Banking
+* Employment
+* Monetary Policy
+* Forex
+* Commodities
+
+### Cause Analysis
+
+The system explains why an economic event occurred by analyzing related news and economic indicators.
+
+### Impact Analysis
+
+The system evaluates how different sectors and stakeholders may be affected by the event.
+
+### Future Outlook
+
+The platform provides AI-generated insights about possible future consequences of the event.
 
 ### Research Report Generation
 
