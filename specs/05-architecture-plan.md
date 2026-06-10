@@ -2,84 +2,196 @@
 
 ## High-Level Architecture
 
-Data Sources
+Economic News Sources
+
 ↓
+
 Data Collection Layer
+
 ↓
+
 Data Processing Layer
+
 ↓
-AI Intelligence Layer
+
+AI Analysis Layer
+
 ↓
-Knowledge Base
+
+Insight Generation Layer
+
 ↓
+
 Application Layer
+
 ↓
-Dashboard & Chatbot
+
+Streamlit Dashboard
+
+---
 
 ## Components
 
 ### Data Collection Layer
 
-Responsibilities:
+#### Responsibilities
 
-* Fetch News
-* Fetch Market Data
-* Fetch Economic Indicators
+* Fetch Economic News
+* Fetch Financial News
+* Collect Economic Announcements
 
-Technologies:
+#### Technologies
 
-* News APIs
-* Economic APIs
-* Market APIs
+* NewsAPI
+* RSS Feeds
+* Public Economic Data Sources
+
+---
 
 ### Data Processing Layer
 
-Responsibilities:
+#### Responsibilities
 
-* Cleaning
+* Data Cleaning
 * Deduplication
-* Normalization
-* Categorization
+* Text Normalization
+* News Categorization
 
-Technologies:
+#### Technologies
 
 * Pandas
 * NumPy
 
-### AI Intelligence Layer
+---
 
-Modules:
+### AI Analysis Layer
 
-* Sentiment Analysis (FinBERT)
-* Event Detection
-* Impact Analysis
-* Prediction Engine
-* Report Generator
+#### Modules
 
-### Knowledge Base
+##### News Summarization
 
-Technologies:
+Generate concise summaries of articles.
 
-* ChromaDB
-* Sentence Transformers
+##### Event Detection
+
+Identify significant economic events from collected news.
+
+##### Cause Analysis
+
+Determine factors contributing to economic developments.
+
+##### Impact Analysis
+
+Assess effects on industries, sectors, and the economy.
+
+##### Future Outlook Generation
+
+Generate AI-powered insights about potential future implications.
+
+#### Technologies
+
+* Gemini API / OpenAI API
+* NLP Processing
+* Prompt Engineering
+
+---
+
+### Insight Generation Layer
+
+#### Responsibilities
+
+* Generate Event Summaries
+* Produce Cause Analysis
+* Create Impact Assessments
+* Generate Future Outlooks
+
+---
 
 ### Application Layer
 
-Backend:
-
-* FastAPI
-
-Frontend:
+#### Frontend
 
 * Streamlit
+
+#### Visualization
+
+* Plotly
+* Matplotlib
+
+---
 
 ## Technology Stack
 
+### Frontend
+
 * Streamlit
-* FastAPI
-* PostgreSQL
-* ChromaDB
-* FinBERT
-* LangChain
+
+### Data Processing
+
+* Pandas
+* NumPy
+
+### AI Services
+
+* Gemini API / OpenAI API
+
+### Visualization
+
 * Plotly
-* Docker
+* Matplotlib
+
+### Storage
+
+* JSON Files (POC)
+* PostgreSQL (Future Scope)
+
+### Deployment
+
+* Streamlit Cloud
+* Docker (Future Scope)
+
+---
+
+## Data Flow
+
+News Sources
+
+↓
+
+News Collection
+
+↓
+
+Data Cleaning & Categorization
+
+↓
+
+Event Detection
+
+↓
+
+Cause Analysis
+
+↓
+
+Impact Analysis
+
+↓
+
+Future Outlook Generation
+
+↓
+
+Dashboard Visualization
+
+---
+
+## Expected Outcome
+
+The platform automatically transforms economic and financial news into structured insights by:
+
+* Identifying important economic events
+* Explaining why events occurred
+* Evaluating sector-wise impacts
+* Generating future outlooks
+* Presenting information through an interactive dashboard

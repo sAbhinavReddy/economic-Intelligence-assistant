@@ -8,19 +8,20 @@ All generated insights must originate from trusted and verifiable economic and f
 
 ### Explainable Intelligence
 
-Every prediction and recommendation must include supporting reasoning.
+Every event analysis, impact assessment, and future outlook must include supporting reasoning and evidence.
 
 ### Transparency
 
 The platform must display:
 
 * Source references
-* Confidence scores
 * Analysis explanations
+* Event classifications
+* Impact assessments
 
 ### User Accessibility
 
-Complex financial concepts should be presented in a simple and understandable format.
+Complex economic and financial concepts should be presented in a simple and understandable format.
 
 ### Data Integrity
 

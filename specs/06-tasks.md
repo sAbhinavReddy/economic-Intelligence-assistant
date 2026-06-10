@@ -3,60 +3,136 @@
 ## Phase 1: Foundation
 
 * Setup Repository
-* Setup Environment
-* Configure Databases
+* Setup Development Environment
+* Create Project Structure
+* Configure Dependencies
+
+---
 
 ## Phase 2: Data Collection
 
 * Integrate News APIs
-* Integrate Economic APIs
-* Integrate Market APIs
-* Create Data Pipelines
+* Configure RSS Feed Sources
+* Collect Economic and Financial News
+* Store Raw News Data
+
+---
 
 ## Phase 3: Data Processing
 
-* Build Cleaning Pipeline
-* Implement Categorization
-* Store Processed Data
+* Build Data Cleaning Pipeline
+* Remove Duplicate Articles
+* Normalize News Content
+* Implement News Categorization
 
-## Phase 4: AI Intelligence
+---
 
-* Sentiment Analysis Module
-* Event Detection Module
-* Impact Analysis Module
-* Economic Health Score Module
+## Phase 4: AI Analysis
 
-## Phase 5: Prediction Engine
+### News Summarization Module
 
-* Historical Data Collection
-* Feature Engineering
-* Model Training
-* Evaluation
+* Generate concise article summaries
+* Extract key highlights
 
-## Phase 6: RAG System
+### Event Detection Module
 
-* Embedding Generation
-* Vector Database Setup
-* Retrieval Logic
-* Chatbot Integration
+* Identify major economic events
+* Categorize detected events
 
-## Phase 7: Dashboard
+### Cause Analysis Module
 
-* Home Page
-* News Page
-* Analytics Page
-* Prediction Page
-* Chatbot Page
-* Reports Page
+* Determine reasons behind economic developments
+* Generate cause explanations
 
-## Phase 8: Testing
+### Impact Analysis Module
+
+* Identify affected sectors
+* Generate impact assessments
+
+### Future Outlook Module
+
+* Generate short-term outlooks
+* Produce economic implications
+
+---
+
+## Phase 5: Dashboard Development
+
+### Home Page
+
+* Display latest economic events
+* Show important headlines
+
+### Event Analysis Page
+
+* Event Summary
+* Cause Analysis
+* Impact Assessment
+* Future Outlook
+
+### Analytics Page
+
+* Category Distribution
+* Event Statistics
+* Sector Impact Analysis
+
+### Reports Page
+
+* Daily Reports
+* Weekly Summaries
+* Monthly Summaries
+
+---
+
+## Phase 6: AI Economic Assistant
+
+* Integrate LLM API
+* Create Question-Answer Interface
+* Generate Event-Based Responses
+* Provide Economic Explanations
+
+---
+
+## Phase 7: Testing
 
 * Unit Testing
 * Integration Testing
+* User Interface Testing
 * Performance Testing
 
-## Phase 9: Deployment
+---
 
-* Docker Setup
-* Cloud Deployment
-* Monitoring
+## Phase 8: Deployment
+
+* Streamlit Cloud Deployment
+* Environment Configuration
+* Final Validation
+
+---
+
+## Deliverables
+
+### Data Layer
+
+* News Collection Pipeline
+* Data Processing Pipeline
+
+### AI Layer
+
+* News Summarization
+* Event Detection
+* Cause Analysis
+* Impact Analysis
+* Future Outlook Generation
+
+### Application Layer
+
+* Streamlit Dashboard
+* AI Economic Assistant
+* Reports Module
+
+### Deployment
+
+* Live Application URL
+* GitHub Repository
+* Documentation

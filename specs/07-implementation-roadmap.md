@@ -4,15 +4,17 @@
 
 ### Features
 
-* News Collection
+* Economic News Collection
 * News Categorization
-* Sentiment Analysis
-* Dashboard
-* Basic Chatbot
+* News Summarization
+* Event Detection
+* Cause Analysis
+* Impact Analysis
+* Streamlit Dashboard
 
 ### Timeline
 
-2-4 Weeks
+1–2 Weeks
 
 ---
 
@@ -20,13 +22,14 @@
 
 ### Features
 
-* Economic Health Score
-* Sector Analysis
+* Future Outlook Generation
+* AI Economic Assistant
+* Advanced Event Categorization
 * Research Reports
 
 ### Timeline
 
-4-6 Weeks
+2–4 Weeks
 
 ---
 
@@ -34,26 +37,28 @@
 
 ### Features
 
-* Market Prediction Engine
-* Historical Analysis
-* Advanced RAG
+* Historical Event Comparison
+* Multi-Country Economic Analysis
+* Personalized Economic Alerts
+* Advanced AI Insights
 
 ### Timeline
 
-6-8 Weeks
+4–8 Weeks
 
 ---
 
 # Success Metrics
 
-* 90%+ News Classification Accuracy
-* 85%+ Sentiment Accuracy
-* Under 3 Second Chatbot Response Time
-* Daily Automated Report Generation
-* Real-Time Dashboard Updates
+* 90%+ Event Detection Accuracy
+* 85%+ News Categorization Accuracy
+* Under 3 Second Dashboard Response Time
+* Successful Cause Analysis Generation
+* Successful Impact Analysis Generation
+* Daily Automated Insight Generation
 
 ---
 
 # Final Deliverable
 
-An AI-powered Economic Intelligence Platform capable of collecting financial news, analyzing sentiment, tracking economic indicators, generating reports, predicting market trends, and providing intelligent economic insights through a dashboard and conversational assistant.
+An AI-powered Economic Intelligence Platform capable of collecting economic and financial news, identifying significant economic events, analyzing their causes, evaluating sector-wise impacts, generating future outlooks, and presenting actionable insights through an interactive Streamlit dashboard and AI-powered assistant.
