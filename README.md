@@ -89,6 +89,19 @@ economic-intelligence-platform/
 └── .env                            # API keys (gitignored)
 ```
 
+### Repository Health Files
+
+These files help keep the project maintainable, secure, and contributor-friendly. Add any that apply to your project:
+
+- `.gitignore` — Prevents secrets/build artifacts from being committed
+- `.editorconfig` — Enforces consistent code style across editors
+- `CHANGELOG.md` — Documents release history
+- `SECURITY.md` — Responsible disclosure policy
+- `CODE_OF_CONDUCT.md` — Community standards
+- `.env.example` — Shows required env vars without exposing values
+- `Dockerfile` — Containerization readiness
+- `.dockerignore` — Keeps Docker images lean and safe
+
 ## News Analysis Fields
 
 Each analyzed article contains:
