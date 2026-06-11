@@ -90,7 +90,7 @@ Generate AI-powered insights about potential future implications.
 
 #### Technologies
 
-* Gemini API / OpenAI API
+* Gemini API
 * NLP Processing
 * Prompt Engineering
 
@@ -133,7 +133,7 @@ Generate AI-powered insights about potential future implications.
 
 ### AI Services
 
-* Gemini API / OpenAI API
+* Gemini API
 
 ### Visualization
 
