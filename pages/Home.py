@@ -20,7 +20,13 @@ def render_home():
     with st.container():
         col1, col2 = st.columns([0.85, 0.15])
         with col1:
-            st.subheader("⏱️ Today's Economy In 30 Seconds")
+            lang = st.session_state.get('language', 'English')
+            summary_titles = {
+                'English': "⏱️ Today's Economy In 30 Seconds",
+                'Hindi': "⏱️ 30 सेकंड में आज की अर्थव्यवस्था",
+                'Telugu': "⏱️ 30 సెకన్లలో నేటి ఆర్థిక వ్యవస్థ"
+            }
+            st.subheader(summary_titles.get(lang, summary_titles['English']))
         with col2:
             if st.button("🔄 Retry", help="Retry generating the AI summary"):
                 st.session_state.pop('daily_summary', None)
@@ -30,7 +36,7 @@ def render_home():
             with st.spinner("Generating AI summary..."):
                 try:
                     assistant = OllamaAssistant(model="qwen2.5:0.5b")
-                    summary = assistant.generate_daily_summary(analyzed_news[:30])
+                    summary = assistant.generate_daily_summary(analyzed_news[:30], language=lang)
                     st.session_state.daily_summary = summary
                 except Exception as e:
                     st.session_state.daily_summary = f"• Unable to generate summary at this time. (Error: {str(e)})"

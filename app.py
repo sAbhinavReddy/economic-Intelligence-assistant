@@ -14,16 +14,41 @@ st.set_page_config(
     layout='wide'
 )
 
+# --- LANGUAGE SELECTOR ---
+if 'language' not in st.session_state:
+    st.session_state.language = 'English'
+
+st.sidebar.title('🌐 Language / भाषा / భాష')
+selected_lang = st.sidebar.selectbox(
+    'Choose Language',
+    ['English', 'Hindi', 'Telugu'],
+    index=['English', 'Hindi', 'Telugu'].index(st.session_state.language),
+    label_visibility="collapsed"
+)
+if selected_lang != st.session_state.language:
+    st.session_state.language = selected_lang
+    st.session_state.pop('daily_summary', None)  # Force AI summary to regenerate
+    st.rerun()
+
+nav_translations = {
+    'Home': {'Hindi': 'मुख्य पृष्ठ', 'Telugu': 'హోమ్', 'English': 'Home'},
+    'News Analysis': {'Hindi': 'समाचार विश्लेषण', 'Telugu': 'వార్తల విశ్లేషణ', 'English': 'News Analysis'},
+    'Economic Insights': {'Hindi': 'आर्थिक अंतर्दृष्टि', 'Telugu': 'ఆర్థిక అంతర్దృష్టులు', 'English': 'Economic Insights'},
+    'Assistant': {'Hindi': 'सहायक', 'Telugu': 'సహాయకుడు', 'English': 'Assistant'},
+    'Navigation': {'Hindi': 'नेविगेशन', 'Telugu': 'నావిగేషన్', 'English': 'Navigation'},
+    'Refresh News': {'Hindi': '🔄 समाचार रीफ्रेश करें', 'Telugu': '🔄 వార్తలను రిఫ్రెష్ చేయండి', 'English': '🔄 Refresh News'}
+}
+
 st.sidebar.title('🇮🇳 India Economic Intelligence')
 page = st.sidebar.radio(
-    'Navigation',
+    nav_translations['Navigation'].get(st.session_state.language, 'Navigation'),
     ['Home', 'News Analysis', 'Economic Insights', 'Assistant'],
-    index=0
+    format_func=lambda x: nav_translations[x].get(st.session_state.language, x)
 )
 
 st.sidebar.markdown('---')
 with st.sidebar:
-    if st.button('🔄 Refresh News', use_container_width=True):
+    if st.button(nav_translations['Refresh News'].get(st.session_state.language, '🔄 Refresh News'), use_container_width=True):
         with st.status('Updating news database...', expanded=True) as status:
             st.write('📡 Fetching News...')
             collector = NewsCollector()

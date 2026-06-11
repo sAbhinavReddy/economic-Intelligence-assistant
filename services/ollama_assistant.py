@@ -30,7 +30,7 @@ Possible Impact: {possible_impact}
 
         return "\n".join(context_parts)
 
-    def generate_answer(self, question: str, retrieved_articles: List[dict]) -> str:
+    def generate_answer(self, question: str, retrieved_articles: List[dict], language: str = "English") -> str:
         if not retrieved_articles:
             return "I couldn't find any relevant articles in the database."
 
@@ -48,6 +48,8 @@ QUESTION:
 
 RELEVANT NEWS ARTICLES:
 {context}
+
+IMPORTANT: Write your ENTIRE response in {language}.
 """
 
         try:
@@ -72,7 +74,7 @@ RELEVANT NEWS ARTICLES:
         except Exception as e:
             return f"I encountered an error with the local AI: {e}"
 
-    def generate_daily_summary(self, articles: List[dict]) -> str:
+    def generate_daily_summary(self, articles: List[dict], language: str = "English") -> str:
         if not articles:
             return "No articles available to summarize."
 
@@ -84,6 +86,8 @@ Here are today's economic news articles:
 {context}
 
 Generate "Today's Economy in 30 Seconds" — exactly 5 bullet points covering the most important events that actually matter to ordinary people.
+
+IMPORTANT: You MUST write your ENTIRE response in {language}.
 """
 
         try:

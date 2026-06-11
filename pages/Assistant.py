@@ -103,7 +103,8 @@ def render_assistant():
         with st.spinner('🤖 Generating answer with Local AI...'):
             try:
                 assistant = OllamaAssistant(model="qwen2.5:0.5b")
-                answer = assistant.generate_answer(question, results)
+                lang = st.session_state.get('language', 'English')
+                answer = assistant.generate_answer(question, results, language=lang)
                 
                 # Store in chat history
                 st.session_state.chat_history.append((question, answer))

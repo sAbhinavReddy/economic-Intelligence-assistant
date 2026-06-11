@@ -49,7 +49,7 @@ Possible Impact: {possible_impact}
 
         return "\n".join(context_parts)
 
-    def generate_answer(self, question: str, retrieved_articles: List[dict]) -> str:
+    def generate_answer(self, question: str, retrieved_articles: List[dict], language: str = "English") -> str:
         if not retrieved_articles:
             return "I couldn't find any relevant articles in the database. Please try a different question or refresh the news database."
 
@@ -70,7 +70,8 @@ QUESTION:
 RELEVANT NEWS ARTICLES:
 {context}
 
-Now, provide a clear, accurate answer following the structure above. Be concise but thorough."""
+Now, provide a clear, accurate answer following the structure above. Be concise but thorough.
+IMPORTANT: You MUST write your ENTIRE response in {language}. Do not use English unless defining a specific technical term."""
 
         max_retries = 3
         for attempt in range(max_retries):
@@ -114,7 +115,7 @@ Now, provide a clear, accurate answer following the structure above. Be concise 
         The assistant will search through articles and explain what's happening.
         """
 
-    def generate_daily_summary(self, articles: List[dict]) -> str:
+    def generate_daily_summary(self, articles: List[dict], language: str = "English") -> str:
         if not articles:
             return "No articles available to summarize."
 
@@ -126,6 +127,8 @@ Here are today's economic news articles:
 {context}
 
 Generate "Today's Economy in 30 Seconds" — exactly 5 bullet points covering the most important events that actually matter to ordinary people.
+
+IMPORTANT: You MUST write your ENTIRE response in {language}.
 """
 
         max_retries = 3
