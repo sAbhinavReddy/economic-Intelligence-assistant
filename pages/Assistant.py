@@ -1,6 +1,6 @@
 import streamlit as st
 from services.rag import RAGService
-from services.ollama_assistant import OllamaAssistant
+from services.gemini_assistant import GeminiAssistant
 
 
 def init_session_state():
@@ -99,10 +99,10 @@ def render_assistant():
             st.warning('No relevant articles found. Try a different question.')
             return
         
-        # Generate answer using Local AI
-        with st.spinner('🤖 Generating answer with Local AI...'):
+        # Generate answer using Gemini AI
+        with st.spinner('🤖 Generating answer with Gemini AI...'):
             try:
-                assistant = OllamaAssistant(model="qwen2.5:0.5b")
+                assistant = GeminiAssistant()
                 lang = st.session_state.get('language', 'English')
                 answer = assistant.generate_answer(question, results, language=lang)
                 
@@ -130,12 +130,15 @@ def render_assistant():
                         st.markdown('---')
                 
                 # Show citation info
-                st.caption('✓ Answer generated locally using Qwen 2.5, based on analyzed Indian economic news articles.')
+                st.caption('✓ Answer generated using Gemini AI, based on analyzed Indian economic news articles.')
             
             except Exception as e:
                 error_msg = str(e)
-                st.error(f'Local AI service encountered an error: {error_msg}')
-                st.info('Ensure Ollama is running in your terminal via `ollama run qwen2.5:0.5b`.')
+                if 'API key' in error_msg.lower() or 'GEMINI_API_KEY' in error_msg:
+                    st.error('Gemini service is not configured. Please set the GEMINI_API_KEY in your Streamlit Cloud secrets.')
+                else:
+                    st.error(f'Gemini service encountered an error: {error_msg}')
+                st.info('The assistant needs the Gemini AI service to generate answers.')
     
     st.markdown('---')
     

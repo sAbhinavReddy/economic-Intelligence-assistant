@@ -149,7 +149,8 @@ class GeminiAnalyzer:
             raise ValueError("google-generativeai library not installed. Please run: pip install google-generativeai")
 
         gai.configure(api_key=self.api_key)
-        self.model = gai.GenerativeModel("gemini-2.5-flash")
+        # Use a specific, fast model for the batch JSON analysis task
+        self.model = gai.GenerativeModel("gemini-2.0-flash")
 
     def extract_json(self, text):
 
@@ -230,58 +231,6 @@ class GeminiAnalyzer:
 
 
 # -----------------------------
-# OLLAMA CLIENT (LOCAL AI)
-# -----------------------------
-
-class OllamaAnalyzer:
-    def __init__(self, model="qwen2.5:0.5b"):
-        self.model = model
-        self.url = "http://localhost:11434/api/generate"
-
-    def extract_json(self, text):
-        try:
-            return json.loads(text)
-        except Exception:
-            match = re.search(r"\{.*\}", text, re.DOTALL)
-            if match:
-                try:
-                    return json.loads(match.group())
-                except Exception:
-                    pass
-        return {}
-
-    def analyze_batch(self, articles):
-        # Local models work best when analyzing articles one by one
-        # instead of large batches, which can sometimes confuse them.
-        results = []
-        for art in articles:
-            prompt = f"""Analyze this Indian economic news article concisely.
-Title: {art.get('title', '')}
-Description: {art.get('description', '')}
-
-Respond with a JSON object in this EXACT format (no extra text):
-{{
-    "what_happened": "One sentence explaining what happened in simple terms",
-    "why_it_happened": "One or two sentences explaining why this happened",
-    "possible_impact": "One or two sentences about how this might affect ordinary people or businesses",
-    "sentiment": "Positive, Negative, or Neutral",
-    "category": "One of: Economy, Banking & Finance, Jobs & Employment, Government Policies, Business & Companies, Technology & Startups, Global Events, Markets, Other"
-}}"""
-            try:
-                response = requests.post(self.url, json={
-                    "model": self.model,
-                    "prompt": prompt,
-                    "stream": False,
-                    "format": "json" # Forces Ollama to output valid JSON
-                })
-                results.append(self.extract_json(response.json().get("response", "")))
-            except Exception as e:
-                print(f"Ollama API error: {e}")
-                results.append({})
-        return results
-
-
-# -----------------------------
 # MAIN ANALYZER
 # -----------------------------
 
@@ -297,8 +246,7 @@ class NewsAnalyzer:
             "data/analyzed_news.json"
         )
 
-        # You can easily switch this back to GeminiAnalyzer() in the future
-        self.ai = OllamaAnalyzer(model="qwen2.5:0.5b")
+        self.ai = GeminiAnalyzer()
 
     def load_articles(self):
 
@@ -390,7 +338,7 @@ class NewsAnalyzer:
                 }
                 analyzed.insert(0, processed_article)
                 
-            time.sleep(15)  # Longer pause between batches to respect rate limits
+            time.sleep(15)  # Longer pause between batches to respect Gemini rate limits
 
         self.save_articles(analyzed)
         print(f"\nAnalysis completed. Saved {total} new articles to {self.output_file}")
@@ -461,7 +409,7 @@ class NewsAnalyzer:
                 }
                 analyzed.insert(0, processed_article)
                 
-            time.sleep(15)  # Longer pause between batches to respect rate limits
+            time.sleep(15)  # Longer pause between batches to respect Gemini rate limits
 
         self.save_articles(analyzed)
 

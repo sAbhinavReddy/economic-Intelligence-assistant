@@ -1,4 +1,12 @@
 ﻿import streamlit as st
+import threading
+
+# Try importing add_script_run_ctx to avoid missing context warnings in threads
+try:
+    from streamlit.runtime.scriptrunner import add_script_run_ctx
+except ImportError:
+    add_script_run_ctx = None
+
 from services.news_collector import NewsCollector
 from services.analyzer import NewsAnalyzer
 from services.rag import RAGService
@@ -13,6 +21,40 @@ st.set_page_config(
     page_icon='🇮🇳',
     layout='wide'
 )
+
+# --- BACKGROUND TASK SETUP ---
+if 'bg_status' not in st.session_state:
+    st.session_state.bg_status = {
+        'running': False,
+        'complete': False,
+        'message': ''
+    }
+
+def background_refresh_task(status_dict):
+    status_dict['running'] = True
+    status_dict['complete'] = False
+    try:
+        status_dict['message'] = '📡 Fetching News...'
+        collector = NewsCollector()
+        raw_articles = collector.collect_all()
+        
+        status_dict['message'] = '🔍 Analyzing Articles...'
+        analyzer = NewsAnalyzer()
+        analyzer.analyze_articles(raw_articles)
+        
+        status_dict['message'] = '🗄️ Updating Knowledge Base...'
+        rag = RAGService()
+        rag.build_collection()
+        
+        save_last_updated()
+        
+        status_dict['message'] = '✅ Background update complete!'
+        status_dict['complete'] = True
+    except Exception as e:
+        status_dict['message'] = f'❌ Error: {str(e)}'
+        status_dict['complete'] = True
+    finally:
+        status_dict['running'] = False
 
 # --- LANGUAGE SELECTOR ---
 if 'language' not in st.session_state:
@@ -36,7 +78,8 @@ nav_translations = {
     'Economic Insights': {'Hindi': 'आर्थिक अंतर्दृष्टि', 'Telugu': 'ఆర్థిక అంతర్దృష్టులు', 'English': 'Economic Insights'},
     'Assistant': {'Hindi': 'सहायक', 'Telugu': 'సహాయకుడు', 'English': 'Assistant'},
     'Navigation': {'Hindi': 'नेविगेशन', 'Telugu': 'నావిగేషన్', 'English': 'Navigation'},
-    'Refresh News': {'Hindi': '🔄 समाचार रीफ्रेश करें', 'Telugu': '🔄 వార్తలను రిఫ్రెష్ చేయండి', 'English': '🔄 Refresh News'}
+    'Refresh News': {'Hindi': '🔄 समाचार रीफ्रेश करें', 'Telugu': '🔄 వార్తలను రిఫ్రెష్ చేయండి', 'English': '🔄 Refresh News'},
+    'Estimated Time': {'Hindi': '⏱️ अनुमानित समय: ~1-2 मिनट', 'Telugu': '⏱️ అంచనా సమయం: ~1-2 నిమిషాలు', 'English': '⏱️ Estimated time: ~1-2 mins'}
 }
 
 st.sidebar.title('🇮🇳 India Economic Intelligence')
@@ -48,32 +91,36 @@ page = st.sidebar.radio(
 
 st.sidebar.markdown('---')
 with st.sidebar:
-    if st.button(nav_translations['Refresh News'].get(st.session_state.language, '🔄 Refresh News'), use_container_width=True):
-        with st.status('Updating news database...', expanded=True) as status:
-            st.write('📡 Fetching News...')
-            collector = NewsCollector()
-            raw_articles = collector.collect_all()
-            st.write(f'✅ Fetched {len(raw_articles)} articles')
+    bg_status = st.session_state.bg_status
+    
+    if bg_status['running']:
+        st.info(f"🔄 **Working in background...**\n\n{bg_status['message']}")
+        st.caption("You can continue using the app.")
+        if st.button("Refresh Status", use_container_width=True):
+            st.rerun()
             
-            st.write('🔍 Analyzing Articles...')
-            analyzer = NewsAnalyzer()
-            analyzer.analyze_articles(raw_articles)
-            st.write('✅ Analysis complete')
+    elif bg_status['complete']:
+        if "Error" in bg_status['message']:
+            st.error(bg_status['message'])
+            btn_label = "Dismiss"
+        else:
+            st.success(bg_status['message'])
+            btn_label = "Apply Updates Now"
             
-            st.write('🗄️ Updating Knowledge Base...')
-            rag = RAGService()
-            result = rag.build_collection()
-            st.write(f'✅ {result.get("message", "Knowledge base updated")}')
+        if st.button(btn_label, type="primary", use_container_width=True):
+            bg_status['complete'] = False
+            bg_status['message'] = ''
+            st.session_state.pop('daily_summary', None)
+            st.rerun()
             
-            save_last_updated()
-            
-            status.update(
-                label='✅ Complete!',
-                state='complete'
-            )
-        
-        st.success('News refreshed successfully. Navigate to other pages to see updates.')
-        st.session_state.pop('daily_summary', None)
+    else:
+        st.caption(nav_translations['Estimated Time'].get(st.session_state.language, '⏱️ Estimated time: ~1-2 mins'))
+        if st.button(nav_translations['Refresh News'].get(st.session_state.language, '🔄 Refresh News'), use_container_width=True):
+            thread = threading.Thread(target=background_refresh_task, args=(bg_status,))
+            if add_script_run_ctx:
+                add_script_run_ctx(thread)
+            thread.start()
+            st.rerun()
 
 st.sidebar.markdown('---')
 st.sidebar.write(

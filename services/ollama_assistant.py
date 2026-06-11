@@ -56,7 +56,10 @@ IMPORTANT: Write your ENTIRE response in {language}.
             response = requests.post(self.url, json={
                 "model": self.model,
                 "prompt": prompt,
-                "stream": False
+                "stream": False,
+                "options": {
+                    "num_predict": 1200
+                }
             })
             
             model_content = response.json().get("response", "")
@@ -85,7 +88,8 @@ Here are today's economic news articles:
 
 {context}
 
-Generate "Today's Economy in 30 Seconds" — exactly 5 bullet points covering the most important events that actually matter to ordinary people.
+TASK: Generate a summary titled "Today's Economy in 30 Seconds".
+It MUST contain EXACTLY 5 bullet points covering the most important events that actually matter to ordinary people. Make sure to write out all 5 bullet points completely.
 
 IMPORTANT: You MUST write your ENTIRE response in {language}.
 """
@@ -94,7 +98,10 @@ IMPORTANT: You MUST write your ENTIRE response in {language}.
             response = requests.post(self.url, json={
                 "model": self.model,
                 "prompt": prompt,
-                "stream": False
+                "stream": False,
+                "options": {
+                    "num_predict": 1000
+                }
             })
             text = response.json().get("response", "")
             if not text or not text.strip():

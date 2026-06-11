@@ -1,6 +1,6 @@
 ﻿import streamlit as st
 from services.utils import safe_load_json, get_last_updated, get_trending_topics
-from services.ollama_assistant import OllamaAssistant
+from services.gemini_assistant import GeminiAssistant
 from collections import Counter
 
 
@@ -35,7 +35,7 @@ def render_home():
         if 'daily_summary' not in st.session_state:
             with st.spinner("Generating AI summary..."):
                 try:
-                    assistant = OllamaAssistant(model="qwen2.5:0.5b")
+                    assistant = GeminiAssistant()
                     summary = assistant.generate_daily_summary(analyzed_news[:30], language=lang)
                     st.session_state.daily_summary = summary
                 except Exception as e:

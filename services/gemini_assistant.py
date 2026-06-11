@@ -24,8 +24,9 @@ class GeminiAssistant:
             raise ValueError("google-generativeai library not installed. Please run: pip install google-generativeai")
 
         gai.configure(api_key=self.api_key)
-        self.model_name = "gemini-2.5-flash"
-        self.model = gai.GenerativeModel(self.model_name)
+        
+        self.assistant_model = gai.GenerativeModel("gemini-2.5-flash")
+        self.summary_model = gai.GenerativeModel("gemini-2.5-flash")
 
     def _build_context(self, articles: List[dict]) -> str:
         context_parts = []
@@ -76,7 +77,7 @@ IMPORTANT: You MUST write your ENTIRE response in {language}. Do not use English
         max_retries = 3
         for attempt in range(max_retries):
             try:
-                response = self.model.generate_content(
+                response = self.assistant_model.generate_content(
                     prompt,
                     generation_config=gai.types.GenerationConfig(
                         temperature=0.3,
@@ -126,7 +127,8 @@ Here are today's economic news articles:
 
 {context}
 
-Generate "Today's Economy in 30 Seconds" — exactly 5 bullet points covering the most important events that actually matter to ordinary people.
+TASK: Generate a summary titled "Today's Economy in 30 Seconds".
+It MUST contain EXACTLY 5 bullet points covering the most important events that actually matter to ordinary people. Make sure to write out all 5 bullet points completely. Do not stop midway.
 
 IMPORTANT: You MUST write your ENTIRE response in {language}.
 """
@@ -134,11 +136,11 @@ IMPORTANT: You MUST write your ENTIRE response in {language}.
         max_retries = 3
         for attempt in range(max_retries):
             try:
-                response = self.model.generate_content(
+                response = self.summary_model.generate_content(
                     prompt,
                     generation_config=gai.types.GenerationConfig(
-                        temperature=0.4,
-                        max_output_tokens=400,
+                        temperature=0.3,
+                        max_output_tokens=2000,
                     )
                 )
                 text = response.text
