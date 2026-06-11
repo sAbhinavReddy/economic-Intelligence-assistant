@@ -144,13 +144,24 @@ class GeminiAnalyzer:
 
     def __init__(self):
         self.api_key = os.getenv("GEMINI_API_KEY")
+        if not self.api_key:
+            try:
+                import streamlit as st
+                self.api_key = st.secrets["GEMINI_API_KEY"]
+            except Exception:
+                pass
 
         if not gai:
             raise ValueError("google-generativeai library not installed. Please run: pip install google-generativeai")
 
         gai.configure(api_key=self.api_key)
-        # Use a specific, fast model for the batch JSON analysis task
-        self.model = gai.GenerativeModel("gemini-2.0-flash")
+        model_name = os.getenv("NEWS_AGENT", "gemini-2.0-flash")
+        
+        # Strip the 'google/' prefix if the .env was configured for OpenRouter format
+        if model_name.startswith("google/"):
+            model_name = model_name.replace("google/", "", 1)
+            
+        self.model = gai.GenerativeModel(model_name)
 
     def extract_json(self, text):
 

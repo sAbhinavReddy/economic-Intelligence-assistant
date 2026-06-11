@@ -8,8 +8,8 @@ This project is a Streamlit application that collects, analyzes, and visualizes 
 - 🤖 Uses Gemini LLM for intelligent analysis with automatic rule-based fallback
 - 📊 Analyzes articles into: What Happened, Why It Happened, Possible Impact
 - 📈 Simplified 9-category system: Economy, Banking & Finance, Jobs & Employment, Government Policies, Business & Companies, Technology & Startups, Global Events, Markets, Other
-- 🔍 RAG-powered assistant for asking questions about Indian economic news
-- 💾 Stores raw articles and analyzed news with sentiment analysis
+- 🔍 RAG-powered chat assistant powered by Gemini for answering questions about Indian economic news
+- � Stores raw articles and analyzed news with sentiment analysis
 - 📊 Interactive Streamlit UI with Home, Analysis, Dashboard, and Assistant pages
 - ⚡ ChromaDB with Sentence Transformers for fast semantic search
 
@@ -48,6 +48,7 @@ Create a `.env` file in the project root and add your API keys:
 ```env
 NEWS_API_KEY=your_newsapi_key_here
 GEMINI_API_KEY=your_gemini_api_key_here
+OPENROUTER_API_KEY=your_openrouter_api_key_here
 ```
 
 ### 5. Run the application
@@ -61,7 +62,7 @@ streamlit run app.py
 - **Home**: View latest news with analysis, filter by category
 - **Analysis**: Filter articles by category, source, or sentiment; search and inspect details
 - **Dashboard**: Explore interactive visualizations of news trends and sentiment
-- **Assistant**: Ask questions about Indian economic news; get answers powered by Gemini
+- **Assistant**: Ask questions about Indian economic news; get answers powered by OpenRouter
 
 ## Project Structure
 
@@ -75,9 +76,10 @@ economic-intelligence-platform/
 │   └── Assistant.py                # RAG-based Q&A assistant
 ├── services/
 │   ├── news_collector.py           # Fetches from multiple news sources
-    ├── analyzer.py                 # Gemini-powered analysis engine
-    ├── rag.py                      # ChromaDB RAG implementation
-    ├── gemini_assistant.py         # LLM response generation
+│   ├── analyzer.py                 # Gemini-powered analysis engine
+│   ├── openrouter_chat_assistant.py  # OpenRouter RAG assistant
+│   ├── openrouter_summary_generator.py # OpenRouter summary generator
+│   ├── rag.py                      # ChromaDB RAG implementation
 │   └── utils.py                    # Common utilities
 ├── data/
 │   ├── raw_news.json               # Collected articles
@@ -117,7 +119,7 @@ Each analyzed article contains:
 ## Key Technologies
 
 - **Framework**: Streamlit (web UI)
-- **LLM**: Gemini (configure your preferred Gemini model)
+- **LLMs**: Gemini (for data analysis) and OpenRouter (for chat and summaries)
 - **Embeddings**: Sentence Transformers (all-MiniLM-L6-v2)
 - **Vector DB**: ChromaDB (PersistentClient)
 - **Data Format**: JSON

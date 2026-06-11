@@ -4,5 +4,5 @@ Gemini handles news analysis, while OpenRouter handles chat and summaries.
 """
 
 raise ImportError(
-    "GeminiAssistant is deprecated. Use OpenRouterChatAssistant and OpenRouterSummaryGenerator."
+    "GeminiSummaryGenerator is deprecated. Use OpenRouterSummaryGenerator."
 )

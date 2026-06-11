@@ -1,6 +1,6 @@
 ﻿import streamlit as st
 from services.utils import safe_load_json, get_last_updated, get_trending_topics
-from services.gemini_assistant import GeminiAssistant
+from services.openrouter_summary_generator import OpenRouterSummaryGenerator
 from collections import Counter
 
 
@@ -35,9 +35,8 @@ def render_home():
         if 'daily_summary' not in st.session_state:
             with st.spinner("Generating AI summary..."):
                 try:
-                    assistant = GeminiAssistant()
-                    summary = assistant.generate_daily_summary(analyzed_news[:30], language=lang)
-                    st.session_state.daily_summary = summary
+                    summary_generator = OpenRouterSummaryGenerator()
+                    st.session_state.daily_summary = summary_generator.generate_daily_summary(analyzed_news[:30], language=lang)
                 except Exception as e:
                     st.session_state.daily_summary = f"• Unable to generate summary at this time. (Error: {str(e)})"
         

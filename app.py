@@ -10,7 +10,8 @@ except ImportError:
 from services.news_collector import NewsCollector
 from services.analyzer import NewsAnalyzer
 from services.rag import RAGService
-from services.utils import save_last_updated
+from services.utils import save_last_updated, safe_load_json
+import time
 from pages.Home import render_home
 from pages.Analysis import render_analysis
 from pages.Dashboard import render_dashboard
@@ -29,6 +30,17 @@ if 'bg_status' not in st.session_state:
         'complete': False,
         'message': ''
     }
+
+# --- AUTO FETCH ON FIRST LOAD ---
+if 'first_load_checked' not in st.session_state:
+    st.session_state.first_load_checked = True
+    if not safe_load_json('data/analyzed_news.json') and not st.session_state.bg_status['running']:
+        st.session_state.bg_status['message'] = 'Initial setup: Fetching news...'
+        thread = threading.Thread(target=background_refresh_task, args=(st.session_state.bg_status,))
+        if add_script_run_ctx:
+            add_script_run_ctx(thread)
+        thread.start()
+        st.rerun()
 
 def background_refresh_task(status_dict):
     status_dict['running'] = True
@@ -95,9 +107,9 @@ with st.sidebar:
     
     if bg_status['running']:
         st.info(f"🔄 **Working in background...**\n\n{bg_status['message']}")
-        st.caption("You can continue using the app.")
-        if st.button("Refresh Status", use_container_width=True):
-            st.rerun()
+        st.caption("Auto-updating status...")
+        time.sleep(2)
+        st.rerun()
             
     elif bg_status['complete']:
         if "Error" in bg_status['message']:

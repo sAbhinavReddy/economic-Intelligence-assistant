@@ -11,6 +11,12 @@ load_dotenv()
 class NewsCollector:
     def __init__(self):
         self.news_api_key = os.getenv('NEWS_API_KEY', '')
+        if not self.news_api_key:
+            try:
+                import streamlit as st
+                self.news_api_key = st.secrets["NEWS_API_KEY"]
+            except Exception:
+                pass
         self.raw_file = Path('data/raw_news.json')
 
     def fetch_newsapi(self):
@@ -46,7 +52,8 @@ class NewsCollector:
     def fetch_google_news(self):
         feed_url = 'https://news.google.com/rss/search?q=india+economy&hl=en-IN&gl=IN&ceid=IN:en'
         try:
-            feed = feedparser.parse(feed_url)
+            response = requests.get(feed_url, timeout=15)
+            feed = feedparser.parse(response.content)
             return [
                 normalize_article({
                     'title': entry.get('title'),
@@ -70,7 +77,8 @@ class NewsCollector:
         all_articles = []
         for feed_url in feed_urls:
             try:
-                feed = feedparser.parse(feed_url)
+                response = requests.get(feed_url, timeout=15)
+                feed = feedparser.parse(response.content)
                 for entry in feed.entries:
                     article = normalize_article({
                         'title': entry.get('title'),

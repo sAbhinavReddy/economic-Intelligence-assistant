@@ -1,6 +1,6 @@
 import streamlit as st
 from services.rag import RAGService
-from services.gemini_assistant import GeminiAssistant
+from services.gemini_chat_assistant import GeminiChatAssistant
 
 
 def init_session_state():
@@ -102,7 +102,7 @@ def render_assistant():
         # Generate answer using Gemini AI
         with st.spinner('🤖 Generating answer with Gemini AI...'):
             try:
-                assistant = GeminiAssistant()
+                assistant = GeminiChatAssistant()
                 lang = st.session_state.get('language', 'English')
                 answer = assistant.generate_answer(question, results, language=lang)
                 
