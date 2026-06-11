@@ -31,17 +31,6 @@ if 'bg_status' not in st.session_state:
         'message': ''
     }
 
-# --- AUTO FETCH ON FIRST LOAD ---
-if 'first_load_checked' not in st.session_state:
-    st.session_state.first_load_checked = True
-    if not safe_load_json('data/analyzed_news.json') and not st.session_state.bg_status['running']:
-        st.session_state.bg_status['message'] = 'Initial setup: Fetching news...'
-        thread = threading.Thread(target=background_refresh_task, args=(st.session_state.bg_status,))
-        if add_script_run_ctx:
-            add_script_run_ctx(thread)
-        thread.start()
-        st.rerun()
-
 def background_refresh_task(status_dict):
     status_dict['running'] = True
     status_dict['complete'] = False
@@ -67,6 +56,17 @@ def background_refresh_task(status_dict):
         status_dict['complete'] = True
     finally:
         status_dict['running'] = False
+
+# --- AUTO FETCH ON FIRST LOAD ---
+if 'first_load_checked' not in st.session_state:
+    st.session_state.first_load_checked = True
+    if not safe_load_json('data/analyzed_news.json') and not st.session_state.bg_status['running']:
+        st.session_state.bg_status['message'] = 'Initial setup: Fetching news...'
+        thread = threading.Thread(target=background_refresh_task, args=(st.session_state.bg_status,))
+        if add_script_run_ctx:
+            add_script_run_ctx(thread)
+        thread.start()
+        st.rerun()
 
 # --- LANGUAGE SELECTOR ---
 if 'language' not in st.session_state:
