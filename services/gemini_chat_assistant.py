@@ -29,7 +29,7 @@ class GeminiChatAssistant:
 
         gai.configure(api_key=self.api_key)
         
-        model_name = os.getenv("CHAT_AGENT", "gemini-2.5-flash")
+        model_name = os.getenv("CHAT_AGENT", "gemini-2.0-flash")
         
         # Strip the 'google/' prefix if the .env was configured for OpenRouter format
         if model_name.startswith("google/"):
@@ -94,7 +94,10 @@ IMPORTANT: You MUST write your ENTIRE response in {language}. Do not use English
                     )
                 )
 
-                model_content = response.text
+                try:
+                    model_content = response.text
+                except ValueError:
+                    model_content = "I'm sorry, I couldn't generate a response due to the AI's safety filters."
 
                 # deterministic references
                 refs = []
@@ -112,7 +115,12 @@ IMPORTANT: You MUST write your ENTIRE response in {language}. Do not use English
                 error_msg = str(e)
                 if "429" in error_msg and attempt < max_retries - 1:
                     match = re.search(r'retry in (\d+(?:\.\d+)?)s', error_msg)
-                    sleep_time = float(match.group(1)) + 1 if match else 60
-                    time.sleep(sleep_time)
+                    sleep_time = float(match.group(1)) + 1 if match else 3
+                    # Cap the sleep time to 5 seconds to avoid hanging the UI
+                    time.sleep(min(sleep_time, 5))
                 else:
-                    return f"I encountered an error while generating the answer: {error_msg}. Please try again."
+                    if "404" in error_msg:
+                        return f"Model Error: The model '{model_name}' was not found. Please update your environment variables."
+                    elif "429" in error_msg:
+                        return "The AI service is currently busy (Rate Limit). Please wait a moment and try again."
+                    return f"I encountered an error: {error_msg}. Please try again."

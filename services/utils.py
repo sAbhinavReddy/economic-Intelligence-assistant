@@ -3,6 +3,9 @@ import os
 import re
 import time
 from pathlib import Path
+import streamlit as st
+import requests
+from concurrent.futures import ThreadPoolExecutor
 
 
 def ensure_directory(path):
@@ -107,3 +110,113 @@ def get_trending_topics(articles, top_n=5):
     
     counter = Counter(words)
     return [word for word, count in counter.most_common(top_n)]
+
+
+def get_sample_articles():
+    """Provide fallback sample articles while initial fetch is running."""
+    return [
+        {
+            'title': 'India\'s GDP Growth Projected at 7% for the Current Fiscal Year',
+            'description': 'A comprehensive report on India\'s economic outlook indicates robust growth metrics.',
+            'source': 'Sample News',
+            'url': '#',
+            'published_date': time.strftime('%Y-%m-%d'),
+            'category': 'Economy',
+            'what_happened': 'Economic experts project a strong 7% GDP growth for India this fiscal year.',
+            'why_it_happened': 'This is driven by strong domestic demand and government capital expenditure.',
+            'possible_impact': 'Positive growth will likely boost job creation and attract more foreign direct investment.',
+            'sentiment': 'Positive'
+        },
+        {
+            'title': 'RBI Keeps Repo Rate Unchanged at 6.5%',
+            'description': 'In its latest monetary policy committee meeting, the RBI maintained the status quo.',
+            'source': 'Sample Finance',
+            'url': '#',
+            'published_date': time.strftime('%Y-%m-%d'),
+            'category': 'Banking & Finance',
+            'what_happened': 'The Reserve Bank of India has decided to keep the benchmark repo rate unchanged.',
+            'why_it_happened': 'The decision aims to balance inflation control with supporting ongoing economic growth.',
+            'possible_impact': 'EMI for home and auto loans will remain stable, providing relief to borrowers.',
+            'sentiment': 'Neutral'
+        },
+        {
+            'title': 'Tech Startups See Resurgence in Funding',
+            'description': 'After a brief funding winter, the startup ecosystem is bouncing back.',
+            'source': 'Sample Tech',
+            'url': '#',
+            'published_date': time.strftime('%Y-%m-%d'),
+            'category': 'Technology & Startups',
+            'what_happened': 'Indian technology startups have witnessed a 20% increase in venture capital funding.',
+            'why_it_happened': 'Investors are showing renewed confidence in AI-driven platforms.',
+            'possible_impact': 'This will spur innovation, lead to new tech jobs, and help startups scale globally.',
+            'sentiment': 'Positive'
+        }
+    ]
+
+
+# --- TRANSLATION UTILITIES ---
+
+@st.cache_data(show_spinner=False, max_entries=2000, ttl=3600)
+def translate_text(text: str, target_lang: str) -> str:
+    """Translates text dynamically using Google Translate's free GTX endpoint."""
+    if not text or not isinstance(text, str) or target_lang == 'English':
+        return text
+        
+    lang_map = {'Hindi': 'hi', 'Telugu': 'te'}
+    tl = lang_map.get(target_lang)
+    if not tl:
+        return text
+        
+    url = "https://translate.googleapis.com/translate_a/single"
+    params = {
+        "client": "gtx",
+        "sl": "en",
+        "tl": tl,
+        "dt": "t",
+        "q": text
+    }
+    
+    try:
+        response = requests.get(url, params=params, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            translated = "".join([segment[0] for segment in data[0] if segment[0]])
+            return translated
+    except Exception:
+        pass
+        
+    return text
+
+def translate_article(article: dict, target_lang: str) -> dict:
+    """Translates an entire article dictionary into the target language."""
+    if target_lang == 'English':
+        return article
+    translated = article.copy()
+    fields = ['title', 'description', 'what_happened', 'why_it_happened', 'possible_impact', 'category', 'sentiment']
+    for field in fields:
+        if translated.get(field):
+            translated[field] = translate_text(translated[field], target_lang)
+    return translated
+
+def translate_articles_list(articles: list, target_lang: str) -> list:
+    """Translates a list of articles concurrently for maximum speed."""
+    if target_lang == 'English' or not articles:
+        return articles
+        
+    try:
+        from streamlit.runtime.scriptrunner import add_script_run_ctx, get_script_run_ctx
+        ctx = get_script_run_ctx()
+    except ImportError:
+        ctx = None
+        
+    def process_article(a):
+        if ctx:
+            try:
+                import threading
+                add_script_run_ctx(threading.current_thread(), ctx)
+            except Exception:
+                pass
+        return translate_article(a, target_lang)
+        
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        return list(executor.map(process_article, articles))

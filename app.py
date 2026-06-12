@@ -84,6 +84,31 @@ if selected_lang != st.session_state.language:
     st.session_state.pop('daily_summary', None)  # Force AI summary to regenerate
     st.rerun()
 
+st.sidebar.markdown('---')
+st.sidebar.subheader('⚙️ AI Backend Settings')
+if 'ai_mode' not in st.session_state:
+    st.session_state.ai_mode = 'Pure RAG (No AI)'
+
+ai_mode = st.sidebar.selectbox(
+    'Choose AI Model',
+    ['Pure RAG (No AI)', 'Local AI (Ollama)', 'Cloud AI (BYOK)'],
+    index=['Pure RAG (No AI)', 'Local AI (Ollama)', 'Cloud AI (BYOK)'].index(st.session_state.ai_mode)
+)
+if ai_mode != st.session_state.ai_mode:
+    st.session_state.ai_mode = ai_mode
+    st.session_state.pop('daily_summary', None)
+    st.rerun()
+
+if ai_mode == 'Cloud AI (BYOK)':
+    byok_key = st.sidebar.text_input('API Key (Gemini/OpenRouter)', type='password', help='Enter your key to unlock cloud AI.')
+    if byok_key:
+        import os
+        os.environ['GEMINI_API_KEY'] = byok_key
+        os.environ['OPENROUTER_API_KEY'] = byok_key
+elif ai_mode == 'Local AI (Ollama)':
+    ollama_model = st.sidebar.text_input('Ollama Model Name', value=st.session_state.get('ollama_model', 'qwen2.5:0.5b'))
+    st.session_state.ollama_model = ollama_model
+
 nav_translations = {
     'Home': {'Hindi': 'मुख्य पृष्ठ', 'Telugu': 'హోమ్', 'English': 'Home'},
     'News Analysis': {'Hindi': 'समाचार विश्लेषण', 'Telugu': 'వార్తల విశ్లేషణ', 'English': 'News Analysis'},
@@ -107,9 +132,9 @@ with st.sidebar:
     
     if bg_status['running']:
         st.info(f"🔄 **Working in background...**\n\n{bg_status['message']}")
-        st.caption("Auto-updating status...")
-        time.sleep(2)
-        st.rerun()
+        st.caption("Status updates as you navigate.")
+        if st.button("Check Status", use_container_width=True):
+            st.rerun()
             
     elif bg_status['complete']:
         if "Error" in bg_status['message']:

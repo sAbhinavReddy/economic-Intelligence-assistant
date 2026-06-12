@@ -43,6 +43,8 @@ The POC aims to demonstrate the following capabilities:
 * Evaluate potential impacts on sectors and industries.
 * Generate future outlook summaries.
 * Present information through an interactive dashboard.
+* Operate seamlessly across multiple languages (English, Hindi, Telugu).
+* Provide flexible, offline-capable analysis to avoid strict reliance on paid Cloud APIs.
 * Provide concise and understandable economic insights.
 
 ---
@@ -120,7 +122,22 @@ Affected Sectors:
 
 ---
 
-## 5. Future Outlook Generation
+## 5. Multilingual & Tri-Mode AI Architecture
+
+The system demonstrates flexible localization and backend execution:
+* Instantly translates headlines, analysis, and dashboard elements to regional languages.
+* Operates using Cloud AI, Local AI (Ollama), or a "Pure RAG" local NLP mode.
+
+### Example
+User selects "Hindi" and "Pure RAG" mode.
+
+### Expected Outcome
+* The dashboard and insights adapt to the Hindi language instantly.
+* User queries fallback to a local encyclopedia or Wikipedia without consuming API tokens.
+
+---
+
+## 6. Future Outlook Generation
 
 The system generates a brief outlook describing possible future implications.
 
@@ -138,7 +155,7 @@ Future Outlook:
 
 ---
 
-## 6. Interactive Dashboard
+## 7. Interactive Dashboard
 
 The platform displays processed information through a Streamlit dashboard.
 
@@ -200,7 +217,9 @@ The POC will be considered successful if the following conditions are met:
 | 4 | Impact Analysis         | Sector-wise impacts generated                             |
 | 5 | Future Outlook          | Outlook generated for major events                        |
 | 6 | Dashboard Functionality | Insights displayed correctly                              |
-| 7 | User Experience         | Users can understand events without reading full articles |
+| 7 | Localization            | Application UI and articles successfully translated       |
+| 8 | Flexible Backend        | RAG chat operates successfully in BYOK, Ollama, & Pure RAG modes |
+ | 9 | User Experience         | Users can understand events without reading full articles |
 
 ---
 

@@ -1,16 +1,19 @@
-﻿# Economic Intelligence Platform (India)
+﻿﻿# Economic Intelligence Platform (India)
 
 This project is a Streamlit application that collects, analyzes, and visualizes Indian economic news. It includes AI-assisted analysis using Gemini and a RAG-based search assistant for exploring economic trends.
 
 ## Key Features
 
-- 🇮🇳 Collects India-focused economic news from multiple sources (NewsAPI, Google News, Moneycontrol, RBI)
-- 🤖 Uses Gemini LLM for intelligent analysis with automatic rule-based fallback
-- 📊 Analyzes articles into: What Happened, Why It Happened, Possible Impact
+- 🇮🇳 **Aggregated Feeds:** Collects India-focused economic news from multiple sources (NewsAPI, Google News, Economic Times).
+- ⚡ **Zero-Dependency Local Analysis:** Uses a lightning-fast custom Local NLP and Rule-Based engine to perform sentiment analysis and extractive summarization instantly—without API keys or rate limits.
+- 🧠 **Tri-Mode AI Architecture:** Users can seamlessly switch between:
+  - **Pure RAG (No AI):** Retrieves answers instantly using a local glossary and Wikipedia fallback.
+  - **Local AI (Ollama):** Completely private and free generative AI running on your local machine.
+  - **Cloud AI (BYOK):** Bring Your Own Key for Gemini or OpenRouter models.
+- 🌐 **Multilingual Support:** Instant, concurrent translation of the entire UI and news articles into Hindi, Telugu, and English.
 - 📈 Simplified 9-category system: Economy, Banking & Finance, Jobs & Employment, Government Policies, Business & Companies, Technology & Startups, Global Events, Markets, Other
-- 🔍 RAG-powered chat assistant powered by Gemini for answering questions about Indian economic news
 - � Stores raw articles and analyzed news with sentiment analysis
-- 📊 Interactive Streamlit UI with Home, Analysis, Dashboard, and Assistant pages
+- 📊 Interactive Streamlit UI with background threading to prevent UI freezing during updates.
 - ⚡ ChromaDB with Sentence Transformers for fast semantic search
 
 ## Getting Started
@@ -62,7 +65,8 @@ streamlit run app.py
 - **Home**: View latest news with analysis, filter by category
 - **Analysis**: Filter articles by category, source, or sentiment; search and inspect details
 - **Dashboard**: Explore interactive visualizations of news trends and sentiment
-- **Assistant**: Ask questions about Indian economic news; get answers powered by OpenRouter
+- **Assistant**: Ask questions about Indian economic news; get answers powered by your selected AI mode.
+- **AI Settings**: Use the sidebar to switch languages or change your AI Backend.
 
 ## Project Structure
 
@@ -70,22 +74,25 @@ streamlit run app.py
 economic-intelligence-platform/
 ├── app.py                          # Main Streamlit app
 ├── pages/
-│   ├── Home.py                     # News overview with article cards
-│   ├── Analysis.py                 # Searchable article analysis
-│   ├── Dashboard.py                # Interactive visualizations
-│   └── Assistant.py                # RAG-based Q&A assistant
+│   ├── Home.py                     # News overview with article cards (Localized)
+│   ├── Analysis.py                 # Searchable article analysis (Localized)
+│   ├── Dashboard.py                # Interactive visualizations (Localized)
+│   └── Assistant.py                # RAG-based Q&A assistant (Localized)
 ├── services/
-│   ├── news_collector.py           # Fetches from multiple news sources
-│   ├── analyzer.py                 # Gemini-powered analysis engine
-│   ├── openrouter_chat_assistant.py  # OpenRouter RAG assistant
-│   ├── openrouter_summary_generator.py # OpenRouter summary generator
+│   ├── analyzer.py                 # Local NLP & Rule-based analysis engine
+│   ├── gemini_chat_assistant.py    # Cloud AI Assistant (BYOK)
+│   ├── news_collector.py           # Fetches from multiple news feeds
+│   ├── ollama_assistant.py         # Local AI Assistant implementation
+│   ├── openrouter_summary_generator.py # Cloud AI daily summary generator
+│   ├── pure_rag_assistant.py       # No-AI RAG with Wikipedia fallback
 │   ├── rag.py                      # ChromaDB RAG implementation
-│   └── utils.py                    # Common utilities
+│   └── utils.py                    # Common utilities & concurrent translation
 ├── data/
 │   ├── raw_news.json               # Collected articles
 │   └── analyzed_news.json          # Analyzed articles with insights
 ├── vector_db/                      # ChromaDB embeddings
-├── specs/                          # Architecture and design docs
+├── poc.md                          # Proof of Concept documentation
+├── skills.md                       # Technical skills & implementations
 ├── requirements.txt                # Python dependencies
 ├── README.md                       # This file
 └── .env                            # API keys (gitignored)
@@ -119,7 +126,8 @@ Each analyzed article contains:
 ## Key Technologies
 
 - **Framework**: Streamlit (web UI)
-- **LLMs**: Gemini (for data analysis) and OpenRouter (for chat and summaries)
+- **AI/NLP**: Ollama (Local LLM), Google Gemini, OpenRouter, Custom Extractive Summarization
+- **Multithreading**: Concurrent futures for non-blocking UI and fast translations
 - **Embeddings**: Sentence Transformers (all-MiniLM-L6-v2)
 - **Vector DB**: ChromaDB (PersistentClient)
 - **Data Format**: JSON
@@ -129,14 +137,13 @@ Each analyzed article contains:
 
 - **NewsAPI**: India business news
 - **Google News**: India economy RSS feed
-- **Moneycontrol**: Indian business RSS
-- **RBI**: Reserve Bank press releases
+- **Economic Times**: RSS business feeds
 
 ## Error Handling
 
 - No Python tracebacks are shown to users
 - Friendly error messages guide users to refresh or rebuild indexes
-- Automatic fallback to rule-based analysis if Gemini is unavailable
+- Failsafes built-in for API limits and network timeouts
 
 ## Troubleshooting
 

@@ -29,16 +29,16 @@ def main():
                 available_models.append(m.name)
                 print(f"  - {m.name} (supports generateContent)")
         
-        desired_model = 'gemini-2.0-flash-lite'
+        desired_model = 'gemini-2.0-flash'
         if desired_model not in available_models and f"models/{desired_model}" not in available_models:
             print(f"\nWarning: '{desired_model}' or 'models/{desired_model}' was not explicitly found in your available models.")
-            print("Please review the list above and update 'self.model_name' in 'services/gemini_assistant.py' and 'services/analyzer.py' to an available model that supports 'generateContent'.")
-            # Attempt with gemini-2.5-flash-lite as a common fallback
-            if 'gemini-2.5-flash-lite' in available_models or 'models/gemini-2.5-flash-lite' in available_models:
-                desired_model = 'gemini-2.5-flash-lite'
-                print(f"Attempting to use 'gemini-2.5-flash-lite' as a fallback for the test.")
+            print("Please review the list above and update 'self.model_name' in 'services/gemini_chat_assistant.py' and 'services/analyzer.py' to an available model that supports 'generateContent'.")
+            # Attempt with gemini-1.5-flash as a common fallback
+            if 'gemini-1.5-flash' in available_models or 'models/gemini-1.5-flash' in available_models:
+                desired_model = 'gemini-1.5-flash'
+                print(f"Attempting to use 'gemini-1.5-flash' as a fallback for the test.")
             else:
-                print("No suitable fallback model ('gemini-2.5-flash-lite') found. Skipping content generation test.")
+                print("No suitable fallback model ('gemini-1.5-flash') found. Skipping content generation test.")
                 return # Exit if no suitable model is found for testing
         
         gai.configure(api_key=api_key)
