@@ -135,6 +135,58 @@ def rule_based_analysis(article):
     }
 
 
+# -----------------------------
+# LOCAL NLP ANALYZER
+# -----------------------------
+
+class LocalNLPAnalyzer:
+    """A lightning-fast, zero-dependency analyzer using basic NLP and Rule-Based heuristics."""
+    def analyze_batch(self, articles):
+        results = []
+
+        positive_words = {'growth', 'profit', 'surge', 'jump', 'gain', 'high', 'up', 'positive', 'boost', 'rise', 'record', 'bullish', 'invest', 'funding', 'success'}
+        negative_words = {'loss', 'fall', 'drop', 'decline', 'down', 'negative', 'crash', 'bearish', 'cut', 'debt', 'crisis', 'inflation', 'recession', 'slump', 'fail'}
+
+        for article in articles:
+            title = article.get('title', '')
+            desc = article.get('description', '')
+            text = f"{title}. {desc}".strip()
+            text_lower = text.lower()
+
+            # 1. Zero-dependency Sentiment Analysis
+            words = set(re.findall(r'\b\w+\b', text_lower))
+            pos_score = len(words.intersection(positive_words))
+            neg_score = len(words.intersection(negative_words))
+
+            if pos_score > neg_score:
+                sentiment = "Positive"
+            elif neg_score > pos_score:
+                sentiment = "Negative"
+            else:
+                sentiment = "Neutral"
+
+            # 2. Extractive Summarization (Sentence Splitting)
+            sentences = [s.strip() for s in re.split(r'[.!?]+', text) if len(s.strip()) > 10]
+            what_happened = sentences[0] if sentences else title
+            why_it_happened = sentences[1] if len(sentences) > 1 else "Keywords indicate recent developments in this sector."
+            possible_impact = sentences[2] if len(sentences) > 2 else "This is expected to influence broader economic or business trends."
+
+            # 3. Rule-Based Categorization
+            category = "Other"
+            for cat, keywords in CATEGORIES.items():
+                if any(k in text_lower for k in keywords):
+                    category = cat
+                    break
+
+            results.append({
+                "what_happened": what_happened,
+                "why_it_happened": why_it_happened,
+                "possible_impact": possible_impact,
+                "sentiment": sentiment,
+                "category": category
+            })
+        return results
+
 
 # -----------------------------
 # GEMINI CLIENT
@@ -257,7 +309,7 @@ class NewsAnalyzer:
             "data/analyzed_news.json"
         )
 
-        self.ai = GeminiAnalyzer()
+        self.ai = LocalNLPAnalyzer()
 
     def load_articles(self):
 
@@ -314,8 +366,7 @@ class NewsAnalyzer:
             print("No new articles to analyze.")
             return
             
-        # We can safely process more articles now via batching
-        new_articles = new_articles[:30]
+        # No need to limit to 30 anymore since local NLP is instant
 
         analyzed = existing_analyzed
         total = len(new_articles)
@@ -348,8 +399,6 @@ class NewsAnalyzer:
                     "description": article.get("description", "")
                 }
                 analyzed.insert(0, processed_article)
-                
-            time.sleep(15)  # Longer pause between batches to respect Gemini rate limits
 
         self.save_articles(analyzed)
         print(f"\nAnalysis completed. Saved {total} new articles to {self.output_file}")
@@ -385,8 +434,7 @@ class NewsAnalyzer:
             print("No new articles to analyze.")
             return
             
-        # We can safely process more articles now via batching
-        new_articles = new_articles[:30]
+        # No need to limit to 30 anymore since local NLP is instant
 
         analyzed = existing_analyzed
         total = len(new_articles)
@@ -419,8 +467,6 @@ class NewsAnalyzer:
                     "description": article.get("description", "")
                 }
                 analyzed.insert(0, processed_article)
-                
-            time.sleep(15)  # Longer pause between batches to respect Gemini rate limits
 
         self.save_articles(analyzed)
 
